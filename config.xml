@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>AutoReports</Name>
+  <Author>Andrew Morgan (ERE)</Author>
+  <Version>1.0.12</Version>
+  <Active>True</Active>
+  <Type>Server</Type>
+  <Description>Generates a CSV file of the Transactions table at the specified location at the specified times for all article requests in In Stacks Searching and In DD Stacks Searching.</Description>
+  <Forms />
+  <Settings>
+    <Setting name="Query1" value="SELECT * FROM Transactions INNER JOIN Users ON Transactions.Username = Users.Username  WHERE RequestType = 'Article' AND TransactionStatus LIKE 'In% Stacks Searching' | Articles In Stacks Searching" type="string">
+      <Description>First SQL query to run. Filename comes after the "|" character, and cannot contain characters that are invalid for filenames. A date/timestamp will be appended to the filename. </Description>
+    </Setting>
+    <Setting name="Query2" value="SELECT * FROM Transactions INNER JOIN Users ON Transactions.Username = Users.Username  WHERE RequestType = 'Loan' AND TransactionStatus LIKE 'In% Stacks Searching' | Loans In Stacks Searching" type="string">
+      <Description>Second SQL query to run. Filename comes after the "|" character, and cannot contain characters that are invalid for filenames. A date/timestamp will be appended to the filename. Leave blank if not in use.</Description>
+    </Setting>
+    <Setting name="Query3" value="SELECT * FROM Users WHERE RequestType = 'Article' AND TransactionStatus = 'Request Sent' | Userinfo in Request Sent" type="string">
+      <Description>Third SQL query to run. Filename comes after the "|" character, and cannot contain characters that are invalid for filenames. A date/timestamp will be appended to the filename. Leave blank if not in use.</Description>
+    </Setting>
+    <Setting name="RunTimes" value="0700, 1200, 1700" type="string">
+      <Description>Times of day to generate the reports. Format is in 24-hour time without punctuation(example: 0800 for 8:00 AM), multiple times each separated by a comma.</Description>
+    </Setting>
+    <Setting name="RunDays" value="Monday, Tuesday, Wednesday, Thursday, Friday" type="string">
+      <Description>Days to generate the reports. Format is the full name of the day of the week, multiple days each separated by a comma.</Description>
+    </Setting>
+    <Setting name="FilePath" value="\\jilliad\illiad2\" type="string">
+      <Description>File path of folder for saving reports. Include trailing backslash.</Description>
+    </Setting>
+    <Setting name="Exclusions" value="'NEH'" type="string">
+      <Description>NVTGCs to exclude from Not Picked Up Reminders. Enclose in single quotes, and separate multiple NVTGCs with commas. Example: 'ex1', 'ex2', 'ex3'</Description>
+    </Setting>
+   </Settings>
+  <Files>
+    <File>AutoReports.lua</File>
+  </Files>
+</Configuration>
